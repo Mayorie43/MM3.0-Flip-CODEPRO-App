@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MM3.0 Flip CODEPRO App</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        min-height: 100vh;
+        background: linear-gradient(180deg, #6a0dad, #38006b);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        color: white;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 420px;
+        background: rgba(255,255,255,0.12);
+        padding: 30px;
+        border-radius: 18px;
+        box-shadow: 0 0 25px rgba(0,0,0,0.35);
+        backdrop-filter: blur(15px);
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 26px;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 15px;
+        margin-bottom: 25px;
+        opacity: 0.9;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 18px;
+        border-radius: 12px;
+        border: none;
+        outline: none;
+        background: rgba(255,255,255,0.18);
+        color: white;
+        font-size: 16px;
+    }
+
+    input::placeholder {
+        color: rgba(255,255,255,0.75);
+    }
+
+    select {
+        color: white;
+        appearance: none;
+    }
+
+    option {
+        color: black;
+    }
+
+    button {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 12px;
+        background: #3cff00;
+        color: black;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: 0.3s ease;
+    }
+
+    button:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Welcome Back</h1>
+    <h2>Sign in to access your trading dashboard</h2>
+
+    <input type="text" id="accountNumber" placeholder="Account Number">
+    <input type="password" id="password" placeholder="Password">
+
+    <select id="tradingServer">
+        <option value="">Trading Server</option>
+        <option>Exness-MT5Real20</option>
+        <option>Exness-MT5Trial3</option>
+        <option>Exness-MT5Real5</option>
+    </select>
+
+    <select id="customServer">
+        <option value="">Custom Server (Optional)</option>
+        <option>Exness-MT5Real20</option>
+        <option>Exness-MT5Demo</option>
+    </select>
+
+    <button id="loginBtn" onclick="login()">Login</button>
+
+</div>
+
+<script>
+function login() {
+    let acc = document.getElementById("accountNumber").value.trim();
+    let pass = document.getElementById("password").value.trim();
+    let btn  = document.getElementById("loginBtn");
+
+    if (acc === "" || pass === "") {
+        alert("Please fill in all required fields.");
+        return;
+    }
+
+    // Step 1: Connecting...
+    btn.innerHTML = "Connecting...";
+    btn.disabled = true;
+
+    // Step 2: After 2 seconds show Connected
+    setTimeout(() => {
+        btn.innerHTML = "Connected ✓";
+        btn.style.background = "#00ff55";
+        btn.style.color = "black";
+    }, 2000);
+
+    // Step 3: Redirect after 1 more second
+    setTimeout(() => {
+        window.location.href = "main.html";
+    }, 3000);
+}
+</script>
+
+</body>
+</html>

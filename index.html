@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bot Extension</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+        transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+
+    .dark-mode {
+        background: #121212;
+        color: white;
+    }
+
+    header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        background: #1E3A8A;
+        color: white;
+        padding: 15px 20px;
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 0;
+        margin: 0;
+    }
+
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .download, .install {
+        text-align: center;
+        padding: 50px 20px;
+    }
+
+    .download-buttons {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .btn {
+        background: #1E3A8A;
+        color: white;
+        padding: 12px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        min-width: 200px;
+    }
+
+    .btn:hover {
+        background: #60A5FA;
+    }
+
+    footer {
+        text-align: center;
+        padding: 20px;
+        background: #1E3A8A;
+        color: white;
+    }
+
+    /* Login popup */
+    .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.7);
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        padding: 15px;
+    }
+
+    .popup-content {
+        background: white;
+        padding: 25px;
+        width: 100%;
+        max-width: 400px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .popup-content input {
+        width: 90%;
+        padding: 12px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+    }
+
+    .popup-btn {
+        width: 100%;
+        background: #1E3A8A;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .popup-btn:hover {
+        background: #60A5FA;
+    }
+
+    .close-btn {
+        margin-top: 15px;
+        background: red;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        header {
+            flex-direction: column;
+            text-align: center;
+            gap: 10px;
+        }
+
+        nav ul {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Bot Extension</h1>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#install">Install</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+    <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+</header>
+
+<section id="download" class="download">
+    <h2>Download Extension</h2>
+    <p>Get the latest version of our Bot extension.</p>
+    <div class="download-buttons">
+        <button class="btn" onclick="openLoginPopup()">Download for MM3.0 Flip CODEPRO</button>
+    </div>
+</section>
+
+<section id="install" class="install">
+    <h2>How to Install</h2>
+    <p>
+        Step 1: Download MM3.0 Flip CODEPRO extension using purchase key<br>
+        Step 2: Install extension on your MT5 along with the bot<br>
+        Step 3: Unlock with activation key<br>
+        Step 4: Contact your provider for guidance on installation
+    </p>
+    <button>View Full Documentation</button>
+</section>
+
+<footer>
+    <p>&copy; 2025 BOT Extension. All Rights Reserved.</p>
+</footer>
+
+<!-- LOGIN POPUP -->
+<div id="loginPopup" class="popup">
+    <div class="popup-content">
+        <h2>Password Required</h2>
+        <p>Enter your password to download the extension.</p>
+        <input type="password" id="password" placeholder="Enter password" required>
+        <button class="popup-btn" onclick="loginAndDownload()">Download</button>
+        <button class="close-btn" onclick="closeLoginPopup()">Cancel</button>
+    </div>
+</div>
+
+<script>
+    const MY_PASSWORD = "32kf17903g51";
+
+    function toggleDarkMode() {
+        document.body.classList.toggle("dark-mode");
+    }
+
+    function openLoginPopup() {
+        document.getElementById("loginPopup").style.display = "flex";
+    }
+
+    function closeLoginPopup() {
+        document.getElementById("loginPopup").style.display = "none";
+    }
+
+    function loginAndDownload() {
+        let password = document.getElementById("password").value;
+        if (password === "") {
+            alert("Please enter your password.");
+            return;
+        }
+        if (password !== MY_PASSWORD) {
+            alert("❌ Wrong password!");
+            return;
+        }
+        alert("✔ Correct password! Download starting...");
+
+        // Download launcher HTML directly (no ZIP)
+        const link = document.createElement('a');
+        link.href = 'downloads/launcher.html'; // path to your launcher HTML
+        link.download = 'MM3.0 Flip CODEPRO Launcher.html';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        closeLoginPopup();
+    }
+</script>
+
+</body>
+</html>
