@@ -20,8 +20,65 @@
         align-items: center;
         padding: 20px;
         color: white;
+        position: relative;
+        overflow: hidden;
     }
 
+    /* INTRO LOADER (NEW MM3.0 STYLE) */
+    #introLoader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        flex-direction: column;
+    }
+
+    .loaderBox {
+        text-align: center;
+        color: white;
+    }
+
+    .loaderBox h1 {
+        font-size: 26px;
+        margin-bottom: 15px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    .loadBar {
+        width: 200px;
+        height: 18px;
+        border: 2px solid white;
+        border-radius: 25px;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+
+    .loadFill {
+        width: 0%;
+        height: 100%;
+        background: white;
+        animation: fillBar 2.8s linear forwards;
+    }
+
+    @keyframes fillBar {
+        from { width: 0%; }
+        to { width: 100%; }
+    }
+
+    .loadingText {
+        margin-top: 10px;
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
+    /* MAIN PAGE */
     .container {
         width: 100%;
         max-width: 420px;
@@ -30,6 +87,8 @@
         border-radius: 18px;
         box-shadow: 0 0 25px rgba(0,0,0,0.35);
         backdrop-filter: blur(15px);
+        opacity: 0;
+        transition: opacity 0.8s ease;
     }
 
     h1 {
@@ -62,11 +121,6 @@
         color: rgba(255,255,255,0.75);
     }
 
-    select {
-        color: white;
-        appearance: none;
-    }
-
     option {
         color: black;
     }
@@ -89,13 +143,26 @@
         opacity: 0.7;
         cursor: not-allowed;
     }
-
 </style>
 
 </head>
 <body>
 
-<div class="container">
+<!-- NEW INTRO -->
+<div id="introLoader">
+    <div class="loaderBox">
+        <h1>MM3.0 Extension</h1>
+
+        <div class="loadBar">
+            <div class="loadFill"></div>
+        </div>
+
+        <p class="loadingText">Loading...</p>
+    </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container" id="mainContent">
 
     <h1>Welcome Back</h1>
     <h2>Sign in to access your trading dashboard</h2>
@@ -105,22 +172,52 @@
 
     <select id="tradingServer">
         <option value="">Trading Server</option>
-        <option>Exness-MT5Real20</option>
-        <option>Exness-MT5Trial3</option>
+        <option>Exness-MT5Real1</option>
+        <option>Exness-MT5Real2</option>
+        <option>Exness-MT5Real3</option>
+        <option>Exness-MT5Real4</option>
         <option>Exness-MT5Real5</option>
+        <option>Exness-MT5Real6</option>
+        <option>Exness-MT5Real7</option>
+        <option>Exness-MT5Real8</option>
+        <option>Exness-MT5Real9</option>
+        <option>Exness-MT5Real10</option>
+        <option>Exness-MT5Real11</option>
+        <option>Exness-MT5Real12</option>
+        <option>Exness-MT5Real13</option>
+        <option>Exness-MT5Real14</option>
+        <option>Exness-MT5Real15</option>
+        <option>Exness-MT5Real16</option>
+        <option>Exness-MT5Real17</option>
+        <option>Exness-MT5Real18</option>
+        <option>Exness-MT5Real19</option>
+        <option>Exness-MT5Real20</option>
+        <option>Exness-MT5Real21</option>
+        <option>Exness-MT5Real22</option>
+        <option>Exness-MT5Real24</option>
+        <option>Exness-MT5Real25</option>
+        <option>Exness-MT5Real26</option>
+        <option>Exness-MT5Real27</option>
+        <option>Exness-MT5Real28</option>
+        <option>Exness-MT5Real29</option>
+        <option>Exness-MT5Real30</option>
     </select>
 
-    <select id="customServer">
-        <option value="">Custom Server (Optional)</option>
-        <option>Exness-MT5Real20</option>
-        <option>Exness-MT5Demo</option>
-    </select>
+    <input type="text" id="customServer" placeholder="Custom Server (Optional)">
 
     <button id="loginBtn" onclick="login()">Login</button>
 
 </div>
 
 <script>
+// Show intro AFTER bar completes (2.8s)
+window.onload = function() {
+    setTimeout(() => {
+        document.getElementById("introLoader").style.display = "none";
+        document.getElementById("mainContent").style.opacity = "1";
+    }, 2900);
+};
+
 function login() {
     let acc = document.getElementById("accountNumber").value.trim();
     let pass = document.getElementById("password").value.trim();
@@ -131,18 +228,15 @@ function login() {
         return;
     }
 
-    // Step 1: Connecting...
     btn.innerHTML = "Connecting...";
     btn.disabled = true;
 
-    // Step 2: After 2 seconds show Connected
     setTimeout(() => {
         btn.innerHTML = "Connected ✓";
         btn.style.background = "#00ff55";
         btn.style.color = "black";
     }, 2000);
 
-    // Step 3: Redirect after 1 more second
     setTimeout(() => {
         window.location.href = "main.html";
     }, 3000);
